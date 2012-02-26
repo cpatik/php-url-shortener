@@ -4,9 +4,9 @@ require 'config.php';
 
 $url = isset($_GET['url']) ? urldecode(trim($_GET['url'])) : '';
 $isBookmarklet = (isset($_GET['bm']) && strlen($_GET['bm']) > 0) ? true : false;
-$longurl = $url;
-$response = "";
-$success = false;
+$longurl = $url;  # Keep track of original URL so we can display it for reference
+$response = "";   # Either the shortened URL or an error message to be displayed
+$success = false; # Whether or not a short URL was created/retrieved
 
 if (in_array($url, array('', 'about:blank', 'undefined', 'http://localhost/'))) {
 	$response = "Enter a URL.";
@@ -55,10 +55,12 @@ else {
 # Display result
 
 if ($isBookmarklet) {
+	# Bookmarklets get plain text
 	header('Content-Type: text/plain;charset=UTF-8');
 	echo $response;
 }
 else {
+	# Non-bookmarklets (i.e., direct navigation) get a nicer HTML page
 	header('Content-Type: text/html;charset=UTF-8');
 	?>
 	<!doctype html>
@@ -105,6 +107,7 @@ else {
 	</head>
 	<body>
 	<?php
+	# Short URL worked
 	if ($success) {
 		?>
 		<p>Short URL: <a href="<?php echo $response; ?>"><?php echo $response; ?></a></p>
@@ -112,6 +115,7 @@ else {
 		<p class="orig">Original URL: <a href="<?php echo $longurl; ?>"><?php echo $longurl; ?></a></p>
 		<?php
 	}
+	# Error message
 	else {
 		?>
 		<p><?php echo $response; ?></p>
@@ -122,12 +126,12 @@ else {
 		function setFocus() {
 			var input = document.getElementById("urlInput");
 			input.focus();
-			try { input.select(); } catch(e) { }
+			try { input.select(); } catch(e) { } <?php /* Sometimes fails in some browsers */ ?>
 		}
 		if (window.addEventListener) {
 			window.addEventListener("load", setFocus, false);
 		}
-		else if (window.attachEvent) {
+		else if (window.attachEvent) { // Le sigh.
 			window.attachEvent("onload", setFocus);
 		}
 		</script>
