@@ -8,33 +8,37 @@
 
 ## Features
 
-* Redirect to Twitter when given a numerical slug, e.g. `http://mths.be/8065633451249664` → `http://twitter.com/mathias/status/8065633451249664`.
-* Redirect to your Twitter account when `@` is used as a slug, e.g. `http://mths.be/@` → `http://twitter.com/mathias`.
-* Redirect to your Google Plus account when `+` is used as a slug, e.g. `http://mths.be/+` → `https://plus.google.com/u/0/116553353277057965424/posts`.
-* Redirect to your main website when no slug is entered, e.g. `http://mths.be/` → `http://mathiasbynens.be/`.
-* Redirect to a specific page on your main website when an unknown slug (not in the database) is used, e.g. `http://mths.be/demo/jquery-size` → `http://mathiasbynens.be/demo/jquery-size`.
-* Ignores weird trailing characters (`!`, `"`, `#`, `$`, `%`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `-`, `.`, `/`, `@`, `:`, `;`, `<`, `=`, `>`, `[`, `\`, `]`, `^`, `_`, `{`, `|`, `}`, `~`) in slugs — useful when your short URL is run through a crappy link parser, e.g. `http://mths.be/aaa)` → same effect as visiting `http://mths.be/aaa`.
+* Redirect to Twitter when given a numerical slug, e.g. `http://crgp.tk/8065633451249664` → `http://twitter.com/craigpatik/status/8065633451249664`.
+* Redirect to your Twitter account when `@` is used as a slug, e.g. `http://crgp.tk/@` → `http://twitter.com/craigpatik`.
+* Redirect to your Google Plus account when `+` is used as a slug, e.g. `http://crgp.tk/+` → `https://plus.google.com/u/0/116553353277057965424/posts`.
+* Redirect to your main website when no slug is entered, e.g. `http://crgp.tk/` → `http://patik.com/`.
+* Redirect to a specific page on your main website when an unknown slug (not in the database) is used, e.g. `http://crgp.tk/html5/` → `http://patik.com/html5/`.
+* Ignores weird trailing characters (`!`, `"`, `#`, `$`, `%`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `-`, `.`, `/`, `@`, `:`, `;`, `<`, `=`, `>`, `[`, `\`, `]`, `^`, `_`, `{`, `|`, `}`, `~`) in slugs — useful when your short URL is run through a crappy link parser, e.g. `http://crgp.tk/aaa)` → same effect as visiting `http://crgp.tk/aaa`.
 * Generates short, easy-to-type URLs using only `[a-z]` characters.
 * Doesn’t create multiple short URLs when you try to shorten the same URL. In this case, the script will simply return the existing short URL for that long URL.
 * DRY, minimal code.
 * Correct, semantic use of the available HTTP status codes.
-* Can be used with Twitter for iPhone. Just go to _Settings_ › _Services_ › _URL Shortening_ › _Custom…_ and enter `http://yourshortener.ext/shorten?url=%@`.
+* Can be used with Twitter for iPhone. Just go to _Settings_ › _Services_ › _URL Shortening_ › _Custom…_ and enter `http://crgp.tk/shorten?url=%@`.
 
 ## Favelets / Bookmarklets
 
 ### Prompt
 
 ``` js
-javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://yourshortener.ext/shorten?url='+encodeURIComponent(q)}}());
+javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(q)}}());
 ```
 
 ### Shorten this URL
 
 ``` js
-javascript:(function(){document.location='http://yourshortener.ext/shorten?url='+encodeURIComponent(location.href)}());
+javascript:(function(){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(location.href)}());
 ````
 
-## Author
+## This fork personalized by
+
+* [Craig Patik](http://patik.com/)
+
+## Original Author
 
 * [Mathias Bynens](http://mathiasbynens.be/)
 

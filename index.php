@@ -1,5 +1,4 @@
 <?php
-
 require 'config.php';
 
 $url = DEFAULT_URL . '/';
@@ -19,6 +18,8 @@ if (isset($_GET['slug'])) {
 		if (is_numeric($slug) && strlen($slug) > 8) {
 			$url = 'http://twitter.com/' . TWITTER_USERNAME . '/status/' . $slug;
 		} else {
+
+			@mail('cpatik@gmail.com', 'hit!', 'slug is ' . $slug);
 
 			$db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
 			$db->set_charset('utf8');

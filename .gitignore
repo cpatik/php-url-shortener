@@ -1,1 +1,5 @@
 .DS_Store
+php-url-shortener.sublime-project
+php-url-shortener.sublime-workspace
+config.php
+sftp-config.json
