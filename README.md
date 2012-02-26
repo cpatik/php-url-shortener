@@ -25,13 +25,13 @@
 ### Prompt
 
 ``` js
-javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(q)}}());
+javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(q)+'bm=1'}}());
 ```
 
 ### Shorten this URL
 
 ``` js
-javascript:(function(){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(location.href)}());
+javascript:(function(){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(location.href)+'bm=1'}());
 ````
 
 ## This fork personalized by
