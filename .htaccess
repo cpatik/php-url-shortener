@@ -4,3 +4,10 @@ RewriteRule ^shorten(.*)$ shorten.php?$1 [L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?slug=$1 [L,QSA]
+
+# Rewrite "www.domain.com -> domain.com"
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ http://%1/$1 [R=301]
+</IfModule>
