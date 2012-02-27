@@ -95,13 +95,17 @@ else {
 		a:hover,
 		a:focus {
 			color: #00B9F7;
-			border-bottom: 1px solid #00B9F7;
+			border-bottom-color: #00B9F7;
 		}
 		.orig {
 			font-size: smaller;
 		}
 		.orig, .orig a {
 			color: #999;
+		}
+		.orig a:hover,
+		.orig a:focus {
+			border-bottom-color: transparent;
 		}
 		</style>
 	</head>

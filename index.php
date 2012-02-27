@@ -9,17 +9,17 @@ if (isset($_GET['slug'])) {
 
 	if ('@' == $slug) {
 		$url = 'http://twitter.com/' . TWITTER_USERNAME;
-	} else if (' ' == $slug) { // +
+	}
+	else if (' ' == $slug) { // +
 		$url = 'https://plus.google.com/u/0/' . GOOGLE_PLUS_ID . '/posts';
-	} else {
-
+	}
+	else {
 		$slug = preg_replace('/[^a-z0-9]/si', '', $slug);
 
 		if (is_numeric($slug) && strlen($slug) > 8) {
 			$url = 'http://twitter.com/' . TWITTER_USERNAME . '/status/' . $slug;
-		} else {
-
-			@mail('cpatik@gmail.com', 'hit!', 'slug is ' . $slug);
+		}
+		else {
 
 			$db = new MySQLi(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
 			$db->set_charset('utf8');
