@@ -6,3 +6,5 @@ sftp-config.json
 admin/
 
 config.php
+
+database.sql
