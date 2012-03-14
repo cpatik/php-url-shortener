@@ -36,7 +36,6 @@ if ($success) {
 	$db->set_charset('utf8');
 
 	$url = $db->real_escape_string($url);
-
 	$result = $db->query('SELECT slug FROM redirect WHERE url = "' . $url . '" LIMIT 1');
 	if ($result && $result->num_rows > 0) { // If there’s already a short URL for this URL
 		$response = SHORT_URL . $result->fetch_object()->slug;

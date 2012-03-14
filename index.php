@@ -4,7 +4,6 @@ require 'config.php';
 $url = DEFAULT_URL . '/';
 
 if (isset($_GET['slug'])) {
-
 	$slug = $_GET['slug'];
 
 	if ('@' == $slug) {
