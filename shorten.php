@@ -3,13 +3,15 @@
 require 'config.php';
 
 $url = isset($_GET['url']) ? urldecode(trim($_GET['url'])) : '';
-$isBookmarklet = (isset($_GET['bm']) && strlen($_GET['bm']) > 0) ? true : false;
+$isBookmarklet = isset($_GET['bm']) ? true : false;
+$customString = isset($_GET['custom']) ? urldecode(trim($_GET['custom'])) : '';
 $longurl = $url;  # Keep track of original URL so we can display it for reference
 $response = "";   # Either the shortened URL or an error message to be displayed
-$success = false; # Whether or not a short URL was created/retrieved
+$success = true; # Whether or not a short URL was created/retrieved
 
 if (in_array($url, array('', 'about:blank', 'undefined', 'http://localhost/'))) {
-	$response = "Enter a URL.";
+	$response = "Enter a URL";
+	$success = false;
 }
 
 function nextLetter(&$str) {
@@ -29,20 +31,32 @@ function getNextShortURL($s) {
 	return implode($a);
 }
 
-$db = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
-$db->set_charset('utf8');
+if ($success) {
+	$db = new mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+	$db->set_charset('utf8');
 
-$url = $db->real_escape_string($url);
+	$url = $db->real_escape_string($url);
 
-$result = $db->query('SELECT slug FROM redirect WHERE url = "' . $url . '" LIMIT 1');
-if ($result && $result->num_rows > 0) { // If there’s already a short URL for this URL
-	$response = SHORT_URL . $result->fetch_object()->slug;
-	$success = true;
-}
-else {
-	$result = $db->query('SELECT slug, url FROM redirect ORDER BY date DESC LIMIT 1');
-	if ($result && $result->num_rows > 0) {
-		$slug = getNextShortURL($result->fetch_object()->slug);
+	$result = $db->query('SELECT slug FROM redirect WHERE url = "' . $url . '" LIMIT 1');
+	if ($result && $result->num_rows > 0) { // If there’s already a short URL for this URL
+		$response = SHORT_URL . $result->fetch_object()->slug;
+		$success = true;
+	}
+	else {
+		# Try to use custom string if available
+		if ($customString) {
+			$result = $db->query("SELECT slug, url FROM redirect WHERE slug='$customString'");
+			if ($result && $result->num_rows > 0) {
+				$slug = $customString;
+			}
+		}
+		# Get new slug
+		else {
+			$result = $db->query('SELECT slug, url FROM redirect ORDER BY date DESC LIMIT 1');
+			if ($result && $result->num_rows > 0) {
+				$slug = getNextShortURL($result->fetch_object()->slug);
+			}
+		}
 		if ($db->query('INSERT INTO redirect (slug, url, date, hits) VALUES ("' . $slug . '", "' . $url . '", NOW(), 0)')) {
 			$response = SHORT_URL . $slug;
 			$success = true;
@@ -51,7 +65,6 @@ else {
 		}
 	}
 }
-
 # Display result
 
 if ($isBookmarklet) {
@@ -67,62 +80,48 @@ else {
 	<html>
 	<head>
 		<title>crgp.tk URL Shortener</title>
-		<style>
-		body {
-			font: 1.2em/2em "Myriad Pro", "Helvetica Neue", Helvetica, "Segoe UI", sans-serif;
-			color: #444;
-			max-width: 32em;
-			margin: 1em auto;
-			background-color: #f4f4f4;
-		}
-		input, a {
-			font: 1em/1.8em Menlo, Consolas, "Courier New", monospace;
-		}
-		input {
-			color: #444;
-			margin-left: 0.5em;
-		}
-		a {
-			color: #0086B3;
-			border-bottom: 1px solid transparent;
-			text-decoration: none;
-			-webkit-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-			   -moz-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-			    -ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-			     -o-transition: color 0.2s ease, border-bottom-color 0.2s ease;
-			        transition: color 0.2s ease, border-bottom-color 0.2s ease;
-		}
-		a:hover,
-		a:focus {
-			color: #00B9F7;
-			border-bottom-color: #00B9F7;
-		}
-		.orig {
-			font-size: smaller;
-		}
-		.orig, .orig a {
-			color: #999;
-		}
-		.orig a:hover,
-		.orig a:focus {
-			border-bottom-color: transparent;
-		}
-		</style>
+		<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link href="style.css" rel="stylesheet">
 	</head>
 	<body>
 	<?php
 	# Short URL worked
 	if ($success) {
 		?>
-		<p>Short URL: <a href="<?php echo $response; ?>"><?php echo $response; ?></a></p>
-		<p>Copy: <input id="urlInput" type="url" size="<?php echo (strlen($response) + 3); ?>" value="<?php echo $response; ?>"></p>
-		<p class="orig">Original URL: <a href="<?php echo $longurl; ?>"><?php echo $longurl; ?></a></p>
+		<section>
+			<h1>Short URL</h1>
+			<p><input id="urlInput" type="url" size="<?php echo (strlen($response) + 3); ?>" value="<?php echo $response; ?>"></p>
+			<p class="orig">Shortened URL: <a href="<?php echo $response; ?>"><?php echo str_replace('http://', '', $response); ?></a></p>
+			<p class="orig">Original URL: <a href="<?php echo $longurl; ?>"><?php echo $longurl; ?></a></p>
+		</section>
+		<section class="bm">
+			<h1>Bookmarklets</h1>
+			<p>Drag these to your bookmarks to shorten other URLs</p>
+			<section>
+				<p>Prompt</p>
+				<p><a href="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">Shorten a URL</a></p>
+			</section>
+			<section>
+				<p>Use current page</p>
+				<p><a href="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">Shorten this URL</a></p>
+			</section>
+		</section>
 		<?php
 	}
 	# Error message
 	else {
 		?>
-		<p><?php echo $response; ?></p>
+		<section>
+			<p><?php echo $response; ?></p>
+		</section>
+		<section>
+			<form action="shorten.php" method="GET">
+				<label>URL: <input type="url" id="url" value=""></label>
+				<label>Custom: <input type="text" id="custom" value="" placeholder="(Optional)"></label>
+				<br>
+				<input type="submit" value="Shorten">
+			</form>
+		</section>
 		<?php
 	}
 	?>
