@@ -8,10 +8,9 @@
 
 ## Features
 
-* Redirect to Twitter when given a numerical slug, e.g. `http://crgp.tk/8065633451249664` → `http://twitter.com/craigpatik/status/8065633451249664`.
+* Redirect to Twitter when given a numerical slug, e.g. `http://crgp.tk/179882100672049152` → `http://twitter.com/craigpatik/status/179882100672049152`.
 * Redirect to your Twitter account when `@` is used as a slug, e.g. `http://crgp.tk/@` → `http://twitter.com/craigpatik`.
 * Redirect to your Google Plus account when `+` is used as a slug, e.g. `http://crgp.tk/+` → `https://plus.google.com/u/0/116553353277057965424/posts`.
-* Redirect to your main website when no slug is entered, e.g. `http://crgp.tk/` → `http://patik.com/`.
 * Redirect to a specific page on your main website when an unknown slug (not in the database) is used, e.g. `http://crgp.tk/html5/` → `http://patik.com/html5/`.
 * Ignores weird trailing characters (`!`, `"`, `#`, `$`, `%`, `&`, `'`, `(`, `)`, `*`, `+`, `,`, `-`, `.`, `/`, `@`, `:`, `;`, `<`, `=`, `>`, `[`, `\`, `]`, `^`, `_`, `{`, `|`, `}`, `~`) in slugs — useful when your short URL is run through a crappy link parser, e.g. `http://crgp.tk/aaa)` → same effect as visiting `http://crgp.tk/aaa`.
 * Generates short, easy-to-type URLs using only `[a-z]` characters.
@@ -34,7 +33,7 @@ javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://cr
 javascript:(function(){document.location='http://crgp.tk/shorten?url='+encodeURIComponent(location.href)+'&bm=1'}());
 ````
 
-## This fork personalized by
+## User interface by
 
 * [Craig Patik](http://patik.com/)
 

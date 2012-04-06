@@ -10,7 +10,7 @@ $response = "";   # Either the shortened URL or an error message to be displayed
 $success = true; # Whether or not a short URL was created/retrieved
 
 if (in_array($url, array('', 'about:blank', 'undefined', 'http://localhost/'))) {
-  $response = "Enter a URL";
+  $response = "Shorten a URL";
   $success = false;
 }
 
@@ -81,59 +81,87 @@ else {
     <title>crgp.tk URL Shortener</title>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <meta name="viewport" content="width=device-width">
-    <link href="style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-  <?php
-  # Short URL worked
-  if ($success) {
-    ?>
-    <section>
-      <h1>Short URL</h1>
-      <p><input id="urlInput" type="url" size="<?php echo (strlen($response) + 3); ?>" value="<?php echo $response; ?>"></p>
-      <p class="orig">Shortened URL: <a href="<?php echo $response; ?>"><?php echo str_replace('http://', '', $response); ?></a></p>
-      <p class="orig">Original URL: <a href="<?php echo $longrl; ?>"><?php echo $longrl; ?></a></p>
-    </section>
+    <div class="container">
     <?php
-  }
-  # Didn't work, show the error message
-  else {
+    # Short URL worked
+    if ($success) {
+      ?>
+      <header><h1>Short URL</h1></header>
+      <section>
+        <form action="shorten" method="GET" class="form-horizontal orig">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" for="url">Shortened URL</label>
+              <div class="controls">
+                <input id="urlInput" type="url" class="input-large" value="<?php echo $response; ?>">
+                <span><a href="<?php echo $response; ?>"><?php echo str_replace('http://', '', $response); ?></a></span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="custom">Original URL</label>
+              <div class="controls">
+                <a href="<?php echo $longrl; ?>"><?php echo $longrl; ?></a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+      <?php
+    }
+    # Didn't work, show the error message
+    else {
+      ?>
+      <header><h1><?php echo $response; ?></h1></header>
+      <section>
+        <form action="shorten" method="GET" class="form-horizontal">
+          <fieldset>
+            <legend>&nbsp;</legend>
+            <div class="control-group">
+              <label class="control-label" for="url">URL</label>
+              <div class="controls">
+                <input type="url" id="url" name="url" class="input-xlarge" value="">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="custom">Custom</label>
+              <div class="controls">
+                <input type="text" id="custom" name="custom" class="input-xlarge" value="" placeholder="(Optional)">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-large">Shorten</button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+      <?php
+    }
+    # Either way, show the bookmarklets
     ?>
-    <section>
-      <p><?php echo $response; ?></p>
-    </section>
-    <section>
-      <form action="shorten.php" method="GET">
-        <label>URL: <input type="url" id="url" name="url" value=""></label>
-        <label>Custom: <input type="text" id="custom" name="custom" value="" placeholder="(Optional)"></label>
-        <br>
-        <input type="submit" value="Shorten">
-      </form>
-    </section>
-    <?php
-  }
-  # Either way, show the bookmarklets
-  ?>
-    <section class="bm">
-      <h1>Bookmarklets</h1>
-      <p>Drag these to your bookmarks to shorten other URLs</p>
-      <section>
-        <h2>Shorten current page</h2>
-        <p><a href="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">Shorten this URL</a></p>
-        <p>
-          <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
-          <input type="text" id="copyBmCurrent" value="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">
-        </p>
+      <section class="bm">
+        <h1>Bookmarklets</h1>
+        <p>Drag these to your bookmarks to shorten other URLs</p>
+        <section>
+          <h3>Shorten current page</h3>
+          <p><a class="btn btn-large" href="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">Shorten this URL</a></p>
+          <p>
+            <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
+            <input type="text" id="copyBmCurrent" value="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">
+          </p>
+        </section>
+        <section>
+          <h3>Prompt for URL</h3>
+          <p><a class="btn btn-large" href="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">Shorten a URL</a></p>
+          <p>
+            <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
+            <input type="text" value="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">
+          </p>
+        </section>
       </section>
-      <section>
-        <h2>Prompt for URL</h2>
-        <p><a href="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">Shorten a URL</a></p>
-        <p>
-          <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
-          <input type="text" value="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">
-        </p>
-      </section>
-    </section>
+    </div>
     <script>
     function setFocus() {
       var input = document.getElementById("urlInput");

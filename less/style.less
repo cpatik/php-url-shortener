@@ -1,0 +1,49 @@
+@import "bootstrap/bootstrap.less";
+@import "bootstrap/responsive.less";
+
+body {
+  padding-top: 2em;
+}
+
+section {
+  margin: 0 0 2em 0;
+}
+
+.orig {
+  font-size: 18px;
+  text-shadow: none;
+
+  a {
+    // font: 1em/1.8em Menlo, Consolas, "Courier New", monospace;
+    color: #0086B3;
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+    -webkit-transition: color 0.2s ease, border-bottom-color 0.2s ease;
+       -moz-transition: color 0.2s ease, border-bottom-color 0.2s ease;
+        -ms-transition: color 0.2s ease, border-bottom-color 0.2s ease;
+         -o-transition: color 0.2s ease, border-bottom-color 0.2s ease;
+            transition: color 0.2s ease, border-bottom-color 0.2s ease;
+
+    &:hover,
+    &:focus {
+      color: #00B9F7;
+      border-bottom-color: #00B9F7;
+    }
+  }
+
+  .controls span {
+    display: block;
+    margin-top: 0.25em;
+  }
+}
+
+input[type="submit"] {
+  font-size: 1.2em;
+}
+
+@media (min-width: 600px) {
+  .bm section {
+    float: left;
+    width: 50%;
+  }
+}
