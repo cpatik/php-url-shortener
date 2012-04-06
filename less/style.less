@@ -9,6 +9,7 @@ section {
   margin: 0 0 2em 0;
 }
 
+// The original and newly-created URLs
 .orig {
   font-size: 18px;
   text-shadow: none;
@@ -32,15 +33,18 @@ section {
   }
 
   .controls span {
+    // Display on its own line
     display: block;
-    margin-top: 0.25em;
+    margin-top: 0.4em;
   }
 }
 
+// Big and clickable
 input[type="submit"] {
   font-size: 1.2em;
 }
 
+// Display bookmarklets side-by-side if there's room
 @media (min-width: 600px) {
   .bm section {
     float: left;
