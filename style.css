@@ -53,9 +53,17 @@ a:focus {
   text-shadow: none;
 }
 
-.bm section {
-  float: left;
-  width: 50%;
+.bm {
+  margin-bottom: 1em;
+}
+
+.bm h2 {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.bm p {
+  margin-bottom: 1em;
 }
 
 .bm a {
@@ -82,4 +90,11 @@ label {
 
 input[type="submit"] {
   font-size: 1.4em;
+}
+
+@media screen and (min-width: 600px) {
+  .bm section {
+    float: left;
+    width: 50%;
+  }
 }
