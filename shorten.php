@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+require_once('config.php');
 
 $url = isset($_GET['url']) ? urldecode(trim($_GET['url'])) : '';
 $isBookmarklet = isset($_GET['bm']) ? true : false;
@@ -78,7 +78,7 @@ else {
   <!doctype html>
   <html>
   <head>
-    <title>crgp.tk URL Shortener</title>
+    <title>Patik.com URL Shortener</title>
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <meta name="viewport" content="width=device-width">
     <link href="css/style.css" rel="stylesheet">
@@ -146,18 +146,18 @@ else {
         <p>Drag these to your bookmarks to shorten other URLs</p>
         <section>
           <h3>Shorten current page</h3>
-          <p><a class="btn btn-large" href="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">Shorten this URL</a></p>
+          <p><a class="btn btn-large" href="javascript:(function(){document.location='http://patik.com/s/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">Shorten this URL</a></p>
           <p>
             <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
-            <input type="text" id="copyBmCurrent" value="javascript:(function(){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">
+            <input type="text" id="copyBmCurrent" value="javascript:(function(){document.location='http://patik.com/s/shorten?bm=t&amp;url='+encodeURIComponent(location.href)}());">
           </p>
         </section>
         <section>
           <h3>Prompt for URL</h3>
-          <p><a class="btn btn-large" href="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">Shorten a URL</a></p>
+          <p><a class="btn btn-large" href="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://patik.com/s/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">Shorten a URL</a></p>
           <p>
             <label for="copyBmCurrent">Copy &amp; paste (for iPhone, etc):</label>
-            <input type="text" value="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://crgp.tk/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">
+            <input type="text" value="javascript:(function(){var%20q=prompt('URL:');if(q){document.location='http://patik.com/s/shorten?bm=t&amp;url='+encodeURIComponent(q)}}());">
           </p>
         </section>
       </section>

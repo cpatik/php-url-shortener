@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 
-$url = DEFAULT_URL . '/';
+$url = DEFAULT_URL;
 
 if (isset($_GET['slug'])) {
 	$slug = $_GET['slug'];
@@ -30,7 +30,7 @@ if (isset($_GET['slug'])) {
 				$db->query('UPDATE redirect SET hits = hits + 1 WHERE slug = "' . $escapedSlug . '"');
 				$url = $redirectResult->fetch_object()->url;
 			} else {
-				$url = DEFAULT_URL . $_SERVER['REQUEST_URI'];
+				$url = DEFAULT_URL . '?url=' . str_replace('/s/', '', $_SERVER['REQUEST_URI']);
 			}
 
 			$db->close();

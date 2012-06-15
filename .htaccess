@@ -1,9 +1,10 @@
 RewriteEngine On
 RewriteBase /
-RewriteRule ^shorten(.*)$ shorten.php?$1 [L,QSA]
+RewriteRule ^shorten$ s/shorten.php [L,QSA]
+# RewriteRule ^shorten(.*)$ s/shorten.php?$1 [L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?slug=$1 [L,QSA]
+RewriteRule ^(.*)$ s/index.php?slug=$1 [L,QSA]
 
 # Rewrite "www.domain.com -> domain.com"
 <IfModule mod_rewrite.c>
