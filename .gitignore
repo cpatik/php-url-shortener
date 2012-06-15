@@ -4,7 +4,6 @@ php-url-shortener.sublime-workspace
 config.php
 sftp-config.json
 admin/
-config.php
 database.initial.sql
 
 config.php
